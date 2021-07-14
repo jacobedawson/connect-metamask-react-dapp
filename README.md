@@ -1,6 +1,6 @@
 Today we're going to build a simple React / Web3 Dapp that replicates a small portion of the Uniswap v2 interface - specifically, we are building the "account login" button that allows users to connect to a Dapp using their MetaMask extension.
 
-By the end of the tutorial you will have a working React app that will be able to connect to your MetaMask account, and read your address & ETH balance. If you connect with multiple accounts the interface will change to reflect the active account.
+By the end of the tutorial you will have a working React app that will be able to connect to your MetaMask account, and read your address & ETH balance. If you connect with multiple accounts the interface will change to reflect the active account. 
 
 A lot of tutorials skip this basic login strategy, or use outdated libraries (which you don't find out until you're halfway through!). To avoid confusion, as of July, 2021 this tutorial & the accompanying repo uses the following tech:
 
@@ -10,7 +10,7 @@ A lot of tutorials skip this basic login strategy, or use outdated libraries (wh
 - @usedapp/core ^0.4.1
 - @chakra-ui/react ^1.6.5
 
-The full repository can be found here.
+The full repository can be found [HERE](https://github.com/jacobedawson/connect-metamask-react-dapp).
 
 We will be replicating (fairly closely) the look, feel, and functionality of the following "Connect to a wallet" section of the [Uniswap v2 interface](https://app.uniswap.org/#/swap):
 
@@ -30,13 +30,12 @@ We'll be using Create React App with a TypeScript template to build our app. We 
 
 To create the app, open up a console and execute the following instructions:
 
+``` 
+npx create-react-app YOUR_APP_NAME --template typescript
 ```
-npx create-react-app simple-web3-dapp --template typescript
-```
-
 This will make a new Create React App project called simple-web3-dapp, with TypeScript pre-configured.
 
-If you open up a copy of VSCode (or the editor of your choice) and navigate to the simple-web3-dapp folder, you'll see a React project ready to go, including index.tsx, App.tsx and a tsconfig.json file.
+If you open up a copy of VSCode (or the editor of your choice) and navigate to your app folder, you'll see a React project ready to go, including index.tsx, App.tsx and a tsconfig.json file.
 
 We won't need a lot of the template files & code, so delete all of the code in the `index.tsx` file and add the following code:
 
@@ -44,21 +43,21 @@ We won't need a lot of the template files & code, so delete all of the code in t
 // index.tsx
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./App"
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
 ```
-
 This gives us the most basic `index.tsx` file we need to begin. Next, we're going to install a few more libraries that we'll be using to create our app:
 
 ```
-npm i @chakra-ui/react @emotion/react @emotion/styled @framer-motion @usedapp/core
+npm i @chakra-ui/react @emotion/react @emotion/styled @framer-motion @usedapp/core 
 ```
+
 
 ## Step 2: Set up useDApp
 
@@ -70,7 +69,7 @@ In our `index.tsx` file, we're going to import the DAppProvider from useDApp to 
 // index.tsx
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./App"
 // Import DAppProvider
 import { DAppProvider } from "@usedapp/core";
 
@@ -98,9 +97,11 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 export default function App() {
   return (
-    // let's us use Chakra UI syntax across our app:
-    <ChakraProvider>// we'll add content to our app shortly</ChakraProvider>
-  );
+    // lets us use Chakra UI syntax across our app:
+    <ChakraProvider>
+      // we'll add content to our app shortly
+    </ChakraProvider>
+  )
 }
 ```
 
@@ -112,7 +113,7 @@ import { ReactNode } from "react";
 import { Flex } from "@chakra-ui/react";
 
 type Props = {
-  children?: ReactNode,
+  children?: ReactNode;
 };
 
 export default function Layout({ children }: Props) {
@@ -126,7 +127,7 @@ export default function Layout({ children }: Props) {
     >
       {children}
     </Flex>
-  );
+  )
 }
 ```
 
@@ -146,11 +147,11 @@ export default function App() {
         <p style={{ color: "white" }}>Hello, world!</p>
       </Layout>
     </ChakraProvider>
-  );
+  )
 }
 ```
-
 If you run `npm start` you should now see a page with "Hello, world!" vertically centered. We're getting to the good stuff soon, I promise :)
+
 
 ## Step 4: Creating our "Connect to a wallet" button
 
@@ -162,7 +163,7 @@ import { Button, Box, Text } from "@chakra-ui/react";
 import { useEthers, useEtherBalance } from "@usedapp/core";
 
 export default function ConnectButton() {
-  const { activateBrowserWallet, account } = useEthers();
+  const {activateBrowserWallet, account } = useEthers();
   const etherBalance = useEtherBalance(account);
 
   return account ? (
@@ -186,7 +187,7 @@ import ConnectButton from "./components/ConnectButton";
 
 <Layout>
   <ConnectButton />
-</Layout>;
+</Layout>
 ```
 
 If you still have React running your page should have hot reloaded and you'll see this:
@@ -207,12 +208,14 @@ export default function ConnectButton() {
   return account ? (
     <Box>
       <Text color="white" fontSize="md">
-        // etherBalance will be an object, so we stringify it
+        // etherBalance will be an object, so we stringify it 
         {etherBalance && JSON.stringify(etherBalance)} ETH
       </Text>
     </Box>
   ) : (
-    <Button onClick={handleConnectWallet}>Connect to a wallet</Button>
+    <Button onClick={handleConnectWallet}>
+      Connect to a wallet
+    </Button>
   );
 }
 ```
@@ -224,7 +227,7 @@ Now for the moment of truth: let's click the "Connect to a wallet button"...
 If everything has gone to plan then clicking the button should have prompted MetaMask to open and give us a "Connect With MetaMask" view:
 
 ![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/0wzkybxu3nvphc0njprq.png)
-
+ 
 Select the account that you'd like to log in with and click "Next" in the MetaMask UI. You should then see a section asking if you will let the dapp view the addresses of your permitted accounts:
 
 ![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ud4gwrvca0sdidtic6jn.png)
@@ -235,7 +238,7 @@ Click "Connect" and all of a sudden you'll see that the Connect Button has been 
 
 This means we're connected! If you have React Dev Tools installed you can also navigate to the Components tab and look for `Web3ReactContext - primary.Provider` - you'll see that the context now holds a `value` object with an `account` property that matches the Ethereum account you connected with:
 
-![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/qjfxnbwxlejwa76v4ne9.png)
+![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/88y1h25j2toatbvf44sv.png)
 
 Ok, so we've made some progress - we're connecting to a React dapp with MetaMask, and we can see account info within our dapp's state. But, this isn't very pretty or useful. We have to do a little bit of work to display something nicer.
 
@@ -262,8 +265,7 @@ Once we've done that, we can use formatEther which will convert ETH denominated 
   </Text>
 </Box
 ```
-
-Now we should see: 0.000 ETH (or if you already have ETH you'll see your account balance). We'll grab some ETH from the Ropsten faucet a little later.
+Now we should see: 0.000 ETH (or if you already have ETH you'll see your account balance). You can grab some Ethereum from the Ropsten faucet [here](https://faucet.ropsten.be/) if you want to see a nice balance :)
 
 Now we're going to add some styles and also pull in the user account address to display it on the Connect Button's logged in state:
 
@@ -332,7 +334,7 @@ Let's compare our Connect Button with the Uniswap version:
 ![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/clkj5sok6vx8yb64a5j9.png)
 
 ![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/k6s4wxfw6w2c7szaw36l.png)
-
+ 
 We're looking pretty close, but we're missing the little avatar. Let's make another component, called `Identicon.tsx`, which we'll create in our `components` folder:
 
 ```javascript
@@ -361,7 +363,7 @@ export default function Identicon() {
   return <StyledIdenticon ref={ref as any}
 }
 ```
-
+ 
 At the moment this won't show us anything different - we're going to install a library called Jazzicon made by MetaMask themselves:
 
 ```
@@ -400,35 +402,36 @@ Now let's import `Identicon.tsx` into `ConnectButton.tsx` and add the Identicon 
 import Identicon from "./Identicon";
 
 // ...other code
-<Button
-  bg="gray.800"
-  border="1px solid transparent"
-  _hover={{
-    border: "1px",
-    borderStyle: "solid",
-    borderColor: "blue.400",
-    backgroundColor: "gray.700",
-  }}
-  borderRadius="xl"
-  m="1px"
-  px={3}
-  height="38px"
->
-  <Text color="white" fontSize="md" fontWeight="medium" mr="2">
-    {account &&
-      `${account.slice(0, 6)}...${account.slice(
-        account.length - 4,
-        account.length
-      )}`}
-  </Text>
-  // Add the newly imported Identicon component
-  <Identicon />
-</Button>;
+      <Button
+        bg="gray.800"
+        border="1px solid transparent"
+        _hover={{
+          border: "1px",
+          borderStyle: "solid",
+          borderColor: "blue.400",
+          backgroundColor: "gray.700",
+        }}
+        borderRadius="xl"
+        m="1px"
+        px={3}
+        height="38px"
+      >
+        <Text color="white" fontSize="md" fontWeight="medium" mr="2">
+          {account &&
+            `${account.slice(0, 6)}...${account.slice(
+              account.length - 4,
+              account.length
+            )}`}
+        </Text>
+        // Add the newly imported Identicon component
+        <Identicon />
+      </Button>
 ```
 
 Lovely! Now we should have an element that displays our Ethereum account and ETH balance along with a nice little avatar:
 
 ![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/386eb74lrefdltu2cq4q.png)
+ 
 
 So let's take stock of where we are now:
 
@@ -436,16 +439,16 @@ So let's take stock of where we are now:
 - We can connect an Ethereum account and retrieve the address & ETH balance
 - We've used Chakra to mimic the style of the Uniswap connect element
 
-A reasonable question that might come up now is: how do we "logout" from the dapp? Notice that the `useEthers` hook comes with the `activateBrowserWallet` function. It also comes with a `deactivate` function that we can use to "log out" from the dapp - however, that needs to come with a bit of extra info: using the `deactivate` function _does not_ actually disconnect the user from the dapp, it merely clears the state in the provider. If we "deactivate" and refresh the page, then click "Connect to a wallet" again, you'll see that the user address and balance is instantly shown, without logging back in via MetaMask.
+A reasonable question that might come up now is: how do we "logout" from the dapp? Notice that the `useEthers` hook comes with the `activateBrowserWallet` function. It also comes with a `deactivate` function that we can use to "log out" from the dapp - however, that needs to come with a bit of extra info: using the `deactivate` function *does not* actually disconnect the user from the dapp, it merely clears the state in the provider. If we "deactivate" and refresh the page, then click "Connect to a wallet" again, you'll see that the user address and balance is instantly shown, without logging back in via MetaMask. 
 
 The reason for this is that once MetaMask is connected via the permissions, it will remain connected until we explicitly disconnect via the MetaMask interface:
 
 ![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/q1j1zqr2nhww5hwwx18h.png)
-
+ 
 If you've used a lot of DeFi products you'll notice that this is the standard Web3 practice, even though it is unintuitive compared to traditional Web2-style auth. This is an ongoing issue related to MetaMask: [https://github.com/MetaMask/metamask-extension/issues/8990](https://github.com/MetaMask/metamask-extension/issues/8990), and while several solutions have been suggested, I personally haven't found one that works as expected. You might notice that in the Uniswap interface itself, they don't provide a "logout" button, just a way to swap wallets:
 
 ![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ztluk95drttpttp6tbq9.png)
-
+ 
 For a bit of extra fun, let's emulate that modal, which will give us a chance to see what else Chakra UI can do in terms of building interfaces.
 
 ### Step 5: Add an Account Modal
@@ -475,7 +478,7 @@ import Identicon from "./Identicon";
 export default function AccountModal() {}
 ```
 
-We're importing a lot of components from Chakra UI here, including 6 modal component elements, and also a couple of icons.
+We're importing a lot of components from Chakra UI here, including 6 modal component elements, and also a couple of icons. 
 
 ```
 npm i @chakra-ui/icons
@@ -488,122 +491,128 @@ Now let's flesh out the modal:
 export default function AccountModal() {
   const { account, deactivate } = useEthers();
 
-  <Modal isCentered size="md">
-    <ModalOverlay />
-    <ModalContent
-      background="gray.900"
-      border="1px"
-      borderStyle="solid"
-      borderColor="gray.700"
-      borderRadius="3xl"
-    >
-      <ModalHeader color="white" px={4} fontSize="lg" fontWeight="medium">
-        Account
-      </ModalHeader>
-      <ModalCloseButton
-        color="white"
-        fontSize="sm"
-        _hover={{
-          color: "whiteAlpha.700",
-        }}
-      />
-      <ModalBody pt={0} px={4}>
-        <Box
-          borderRadius="3xl"
-          border="1px"
-          borderStyle="solid"
-          borderColor="gray.600"
-          px={5}
-          pt={4}
-          pb={2}
-          mb={3}
-        >
-          <Flex justifyContent="space-between" alignItems="center" mb={3}>
-            <Text color="gray.400" fontSize="sm">
-              Connected with MetaMask
-            </Text>
-            <Button
-              variant="outline"
-              size="sm"
-              borderColor="blue.800"
-              borderRadius="3xl"
-              color="blue.500"
-              fontSize="13px"
-              fontWeight="normal"
-              px={2}
-              height="26px"
-              _hover={{
-                background: "none",
-                borderColor: "blue.300",
-                textDecoration: "underline",
-              }}
-            >
-              Change
-            </Button>
-          </Flex>
-          <Flex alignItems="center" mt={2} mb={4} lineHeight={1}>
-            <Identicon />
-            <Text
-              color="white"
-              fontSize="xl"
-              fontWeight="semibold"
-              ml="2"
-              lineHeight="1.1"
-            >
-              {account &&
-                `${account.slice(0, 6)}...${account.slice(
-                  account.length - 4,
-                  account.length
-                )}`}
-            </Text>
-          </Flex>
-          <Flex alignContent="center" m={3}>
-            <Button
-              variant="link"
-              color="gray.400"
-              fontWeight="normal"
-              fontSize="sm"
-              _hover={{
-                textDecoration: "none",
-                color: "whiteAlpha.800",
-              }}
-            >
-              <CopyIcon mr={1} />
-              Copy Address
-            </Button>
-            <Link
-              fontSize="sm"
-              display="flex"
-              alignItems="center"
-              href={`https://ropsten.etherscan.io/address/${account}`}
-              isExternal
-              color="gray.400"
-              ml={6}
-              _hover={{
-                color: "whiteAlpha.800",
-                textDecoration: "underline",
-              }}
-            >
-              <ExternalLinkIcon mr={1} />
-              View on Explorer
-            </Link>
-          </Flex>
-        </Box>
-      </ModalBody>
-
-      <ModalFooter
-        justifyContent="end"
-        background="gray.700"
-        borderBottomLeftRadius="3xl"
-        borderBottomRightRadius="3xl"
-        p={6}
+    <Modal isCentered size="md">
+      <ModalOverlay />
+      <ModalContent
+        background="gray.900"
+        border="1px"
+        borderStyle="solid"
+        borderColor="gray.700"
+        borderRadius="3xl"
       >
-        <Text color="white" textAlign="left" fontWeight="medium" fontSize="md">
-          Your transactions willl appear here...
-        </Text>
-      </ModalFooter>
-    </ModalContent>
-  </Modal>;
+        <ModalHeader color="white" px={4} fontSize="lg" fontWeight="medium">
+          Account
+        </ModalHeader>
+        <ModalCloseButton
+          color="white"
+          fontSize="sm"
+          _hover={{
+            color: "whiteAlpha.700",
+          }}
+        />
+        <ModalBody pt={0} px={4}>
+          <Box
+            borderRadius="3xl"
+            border="1px"
+            borderStyle="solid"
+            borderColor="gray.600"
+            px={5}
+            pt={4}
+            pb={2}
+            mb={3}
+          >
+            <Flex justifyContent="space-between" alignItems="center" mb={3}>
+              <Text color="gray.400" fontSize="sm">
+                Connected with MetaMask
+              </Text>
+              <Button
+                variant="outline"
+                size="sm"
+                borderColor="blue.800"
+                borderRadius="3xl"
+                color="blue.500"
+                fontSize="13px"
+                fontWeight="normal"
+                px={2}
+                height="26px"
+                _hover={{
+                  background: "none",
+                  borderColor: "blue.300",
+                  textDecoration: "underline",
+                }}
+
+              >
+                Change
+              </Button>
+            </Flex>
+            <Flex alignItems="center" mt={2} mb={4} lineHeight={1}>
+              <Identicon />
+              <Text
+                color="white"
+                fontSize="xl"
+                fontWeight="semibold"
+                ml="2"
+                lineHeight="1.1"
+              >
+                {account &&
+                  `${account.slice(0, 6)}...${account.slice(
+                    account.length - 4,
+                    account.length
+                  )}`}
+              </Text>
+            </Flex>
+            <Flex alignContent="center" m={3}>
+              <Button
+                variant="link"
+                color="gray.400"
+                fontWeight="normal"
+                fontSize="sm"
+                _hover={{
+                  textDecoration: "none",
+                  color: "whiteAlpha.800",
+                }}
+              >
+                <CopyIcon mr={1} />
+                Copy Address
+              </Button>
+              <Link
+                fontSize="sm"
+                display="flex"
+                alignItems="center"
+                href={`https://ropsten.etherscan.io/address/${account}`}
+                isExternal
+                color="gray.400"
+                ml={6}
+                _hover={{
+                  color: "whiteAlpha.800",
+                  textDecoration: "underline",
+                }}
+              >
+                <ExternalLinkIcon mr={1} />
+                View on Explorer
+              </Link>
+            </Flex>
+          </Box>
+        </ModalBody>
+
+        <ModalFooter
+          justifyContent="end"
+          background="gray.700"
+          borderBottomLeftRadius="3xl"
+          borderBottomRightRadius="3xl"
+          p={6}
+        >
+          <Text
+            color="white"
+            textAlign="left"
+            fontWeight="medium"
+            fontSize="md"
+          >
+            Your transactions willl appear here...
+          </Text>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
 }
 ```
 
@@ -666,7 +675,7 @@ type Props = {
       >
 ```
 
-We've also added two props to `AccountModal.tsx`, so let's add a TypeScript type (just using "any" to keep TypeScript from complaining - not best practice) and add the handlers:
+We've also added two props to `AccountModal.tsx`, so let's add a TypeScript type (just using "any" to keep TypeScript from complaining -  not best practice) and add the handlers:
 
 ```javascript
 // AccountModal.tsx
@@ -678,14 +687,14 @@ type Props = {
 
 export default function AccountModal({ isOpen, onClose }: Props) {
   const { account, deactivate } = useEthers();
-
+  
   // Add a function to handle deactivating account
   function handleDeactivateAccount() {
     deactivate();
     onClose();
   }
 
-  return (
+  return ( 
     // add our isOpen state and onClose handler to the Modal
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
     // ...other code
@@ -716,16 +725,18 @@ export default function AccountModal({ isOpen, onClose }: Props) {
             </Flex>
 ```
 
-Now we should be able to trigger our `AccountModal` when we click on the logged-in `ConnectButton`, which will open up the modal and allow us to deactivate the account by clicking "Change".
+Now we should be able to trigger our `AccountModal` when we click on the logged-in `ConnectButton`, which will open up the modal and allow us to deactivate the account by clicking "Change". 
 
 ![image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/el02jknrq8beijxlsz5w.png)
+ 
+You'll notice that if you click "Change" that we will see the logged out `ConnectButton`. If you click it you'll also see that we're immediately logged in - our MetaMask was never disconnected from the dapp. 
 
-You'll notice that if you click "Change" that we will see the logged out `ConnectButton`. If you click it you'll also see that we're immediately logged in - our MetaMask was never disconnected from the dapp.
-
-And that's it for this tutorial! Hopefully it will help you feel comfortable getting started with connecting an Ethereum account to a Web3 dapp, and show you the power of combining the useDApp framework with React, alongside the power of the Chakra UI component library.
+And that's it for this tutorial! Hopefully it will help you feel comfortable getting started with connecting an Ethereum account to a Web3 dapp, and show you the power of combining the useDApp framework with React, alongside the power of the Chakra UI component library. 
 
 The next steps for us will be to learn how to import contracts and make transactions - let me know in the comments if that's something you'd like to learn!
 
 Thanks for playing ;)
 
-Full Repo:
+[Full Repo](https://github.com/jacobedawson/connect-metamask-react-dapp)
+
+Follow me on Twitter: https://twitter.com/jacobedawson
