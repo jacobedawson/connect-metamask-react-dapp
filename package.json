@@ -10,7 +10,7 @@
     "@emotion/styled": "^11.3.0",
     "@ethersproject/address": "^5.4.0",
     "@ethersproject/contracts": "^5.4.0",
-    "@ethersproject/providers": "^5.4.1",
+    "@ethersproject/providers": "^5.4.0",
     "@ethersproject/solidity": "^5.4.0",
     "@ethersproject/units": "^5.4.0",
     "@fontsource/inter": "^4.5.0",
@@ -23,12 +23,16 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@usedapp/core": "^0.4.1",
-    "ethers": "^5.2.0",
+    "ethers": "^5.4.0",
     "framer-motion": "^4.1.17",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "typescript": "^4.1.2"
+  },
+  "resolutions": {
+    "@ethersproject/abi": "5.2.0",
+    "@ethersproject/contracts": "5.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,10 +45,6 @@
       "react-app",
       "react-app/jest"
     ]
-  },
-  "resolutions": {
-    "@ethersproject/abi": "5.1.2",
-    "@ethersproject/contracts": "5.1.1"
   },
   "browserslist": {
     "production": [
