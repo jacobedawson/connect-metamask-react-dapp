@@ -7,12 +7,13 @@ import {
   NumberInput,
   NumberInputField,
 } from "@chakra-ui/react";
-import { useCount, useIncrement, useSetCount } from "../hooks";
+import { useCount, useContractMethod } from "../hooks";
 
 export default function Count() {
   const count = useCount();
-  const { state, send: incrementCount } = useIncrement();
-  const { state: setCountState, send: setCount } = useSetCount();
+  const { state, send: incrementCount } = useContractMethod("incrementCount");
+  const { state: setCountState, send: setCount } =
+    useContractMethod("setCount");
   const [input, setInput] = useState("");
 
   function handleIncrement() {

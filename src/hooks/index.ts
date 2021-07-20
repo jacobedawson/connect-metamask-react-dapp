@@ -20,13 +20,16 @@ export function useCount() {
 }
 
 export function useIncrement() {
-  console.log("useIncrement");
   const { state, send } = useContractFunction(contract, "incrementCount", {});
   return { state, send };
 }
 
 export function useSetCount() {
-  console.log("setCount");
   const { state, send } = useContractFunction(contract, "setCount", {});
+  return { state, send };
+}
+
+export function useContractMethod(methodName: string) {
+  const { state, send } = useContractFunction(contract, methodName, {});
   return { state, send };
 }
