@@ -1,6 +1,19 @@
 [
   {
     "inputs": [],
+    "name": "count",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "incrementCount",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -20,16 +33,21 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "count",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "_valueA",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_valueB",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "name": "takeTwoVariables",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   }
 ]
