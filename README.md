@@ -360,7 +360,7 @@ export default function Identicon() {
     }
   }, [account]);
 
-  return <StyledIdenticon ref={ref as any}
+  return <StyledIdenticon ref={ref as any} />
 }
 ```
  
@@ -627,7 +627,6 @@ import theme from "./theme";
 import Layout from "./components/Layout";
 import ConnectButton from "./components/ConnectButton";
 import AccountModal from "./components/AccountModal";
-import "@fontsource/inter";
 
 function App() {
   // Pull the disclosure methods
